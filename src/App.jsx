@@ -32,12 +32,11 @@ const App = () => {
 
   const highlightMatches = () => {
     if (searchString) {
-      const flags = caseSensitive ? "g" : "gi"; // Global flag, and 'i' for case-insensitive
+      const flags = caseSensitive ? "g" : "gi"; 
       const regex = wholeWord
-        ? new RegExp(`\\b${searchString}\\b`, flags) // Match only whole words
-        : new RegExp(searchString, flags); // Partial match
+        ? new RegExp(`\\b${searchString}\\b`, flags)
+        : new RegExp(searchString, flags); 
       
-      // Highlight matching logic
       const matches = [...text.matchAll(regex)];
       const highlightedText = text.replace(regex, (match) => `<mark>${match}</mark>`);
       setHighlightedText(highlightedText);
@@ -52,23 +51,18 @@ const App = () => {
   
 
   const handleReplace = (replaceAll = false) => {
-    const flags = caseSensitive ? "g" : "gi"; // Case sensitivity logic
-  
-    // Whole word logic: Match words with word boundaries (`\b` ensures it's a full word)
+    const flags = caseSensitive ? "g" : "gi"; 
     const regex = wholeWord
       ? new RegExp(`\\b${searchString}\\b`, flags)
       : new RegExp(searchString, flags);
   
     if (replaceAll) {
-      // Replace all matching words
       setText((prevText) => prevText.replace(regex, replaceString));
     } else {
-      // Replace only the current match
       let matchCount = 0;
       let newText = text.replace(regex, (match, offset) => {
         matchCount++;
         if (matchCount === currentMatchIndex) {
-          // Replace only the specific match
           return replaceString;
         }
         return match;
